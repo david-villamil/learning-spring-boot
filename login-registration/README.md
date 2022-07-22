@@ -10,3 +10,5 @@ This project uses
 * Email verification with expiry
 * MySQL Driver
 * Spring Data JPA
+
+![diagram](https://github.com/david-villamil/learning-spring-boot/blob/main/login-registration/screenshots/diagram.png)
