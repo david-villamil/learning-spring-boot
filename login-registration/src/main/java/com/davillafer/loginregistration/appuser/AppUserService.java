@@ -1,12 +1,17 @@
 package com.davillafer.loginregistration.appuser;
 
+import com.davillafer.loginregistration.registration.token.ConfirmationToken;
+import com.davillafer.loginregistration.registration.token.ConfirmationTokenRepository;
+import com.davillafer.loginregistration.registration.token.ConfirmationTokenService;
 import lombok.AllArgsConstructor;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @AllArgsConstructor
@@ -14,6 +19,7 @@ public class AppUserService implements UserDetailsService {
 
     private final static String USER_NOT_FOUND = "Email %s not found";
     private final AppUserRepository appUserRepository;
+    private final ConfirmationTokenService confirmationTokenService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Override
@@ -30,7 +36,20 @@ public class AppUserService implements UserDetailsService {
         String encodedPassword = bCryptPasswordEncoder.encode(appUser.getPassword());
         appUser.setPassword(encodedPassword);
         appUserRepository.save(appUser);
-        // TODO: SEND CONFIRMATION TOKEN
-        return "it works";
+        // Send confirmation token
+        String token = UUID.randomUUID().toString();
+        ConfirmationToken confirmationToken = new ConfirmationToken(
+                token,
+                LocalDateTime.now(),
+                LocalDateTime.now().plusMinutes(15),
+                appUser
+        );
+        confirmationTokenService.saveConfirmationToken(confirmationToken);
+        // Send email
+        return token;
+    }
+
+    public int enableAppUser(String email) {
+        return appUserRepository.enableAppUser(email);
     }
 }
