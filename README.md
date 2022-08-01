@@ -14,3 +14,7 @@ API provides:
 ## login-registration
 
 ![diagram](https://github.com/david-villamil/learning-spring-boot/blob/main/login-registration/screenshots/diagram.png)
+
+## taco-cloud
+
+Code generated following the book <i>Spring in action</i>.
