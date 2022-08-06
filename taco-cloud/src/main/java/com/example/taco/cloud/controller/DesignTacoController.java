@@ -3,6 +3,7 @@ package com.example.taco.cloud.controller;
 import com.example.taco.cloud.domain.Ingredient;
 import com.example.taco.cloud.domain.Ingredient.Type;
 import com.example.taco.cloud.domain.Taco;
+import com.example.taco.cloud.domain.TacoOrder;
 import com.example.taco.cloud.repository.IngredientRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,6 +40,16 @@ public class DesignTacoController {
         }
     }
 
+    @ModelAttribute(name = "tacoOrder")
+    public TacoOrder tacoOrder() {
+        return new TacoOrder();
+    }
+
+    @ModelAttribute(name = "taco")
+    public Taco taco() {
+        return new Taco();
+    }
+
     @GetMapping
     public String showDesignForm(Model model) {
         model.addAttribute("taco", new Taco());
@@ -46,14 +57,15 @@ public class DesignTacoController {
     }
 
     @PostMapping
-    public String processTaco(@Valid Taco taco, Errors errors) {
+    public String processTaco(@Valid Taco taco, Errors errors, @ModelAttribute TacoOrder tacoOrder) {
         // Validation
         if (errors.hasErrors()) {
             return "design";
         }
-        // TODO: Save the taco...
-        log.info("Processing taco: " + taco);
+        // Save taco
+        tacoOrder.addTaco(taco);
 
+        log.info("Processing taco: " + taco);
         return "redirect:/orders/current";
     }
 
