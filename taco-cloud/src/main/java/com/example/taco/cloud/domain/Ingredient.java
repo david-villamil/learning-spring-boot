@@ -1,31 +1,24 @@
 package com.example.taco.cloud.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.domain.Persistable;
-import org.springframework.data.relational.core.mapping.Table;
 
 @Data
-@Table
+@Entity
 @AllArgsConstructor
-public class Ingredient implements Persistable<String> {
-
+@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
+public class Ingredient {
     @Id
-    private final String id;
+    private String id;
+    private String name;
+    private Type type;
 
-    private final String name;
-
-    private final Type type;
-
-    @Override
-    public boolean isNew() {
-        return true;
-    }
-
-    public enum Type {
+    public static enum Type {
         WRAP, PROTEIN, VEGGIES, CHEESE, SAUCE
     }
 }
