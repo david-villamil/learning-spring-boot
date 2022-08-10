@@ -17,5 +17,4 @@ public interface OrderRepository extends CrudRepository<TacoOrder, Long> {
 
     @Query("SELECT o FROM TacoOrder o where o.deliveryCity='Seattle'")
     List<TacoOrder> readOrdersDeliveredInSeattle();
-
 }

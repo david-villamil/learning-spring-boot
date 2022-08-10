@@ -10,8 +10,14 @@
 <body>
     <h1>Welcome to...</h1>
     <img style="width: 200px" th:src="@{/images/TacoCloud.png}"/>
-
-    <form method="POST" th:object="${taco}">
+    <br/>
+    <br/>
+    <form method="POST" th:action="@{/logout}">
+        <input type="submit" value="Logout"/>
+    </form>
+    <br/>
+    <br/>
+    <form method="POST" th:action="@{/design}" th:object="${taco}">
         <div class="grid">
             <span class="validationError"
                   th:if="${#fields.hasErrors('ingredients')}"
