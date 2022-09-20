@@ -1,5 +1,15 @@
 # learning-spring-boot
  
+## team-crud-api
+
+API provides:
+
+| *Methods*  | *Urls*                                          | *Actions*               |
+|:----------:|:------------------------------------------------|:------------------------|
+|    GET     | `/api/v1/teams?name=[name]`                     | Read all teams          |
+|    POST    | `/api/v1/teams`                                 | Add team                |
+|    DELETE  | `/api/v1/teams/:id`                             | Delete team by `:id`    |
+
 ## Students
 
 API provides:
